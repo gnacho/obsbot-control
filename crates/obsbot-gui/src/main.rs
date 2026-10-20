@@ -33,6 +33,7 @@ mod i18n_errors;
 mod preview;
 mod ptz_pad;
 mod settings;
+mod v4l2_labels;
 mod wb_group;
 mod window;
 

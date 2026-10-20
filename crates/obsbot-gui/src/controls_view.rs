@@ -982,7 +982,7 @@ fn integer_scale_row(
     }
 
     let row = adw::ActionRow::builder()
-        .title(&ctrl.name)
+        .title(&crate::v4l2_labels::control_name(ctrl.id, &ctrl.name))
         .activatable(false)
         .build();
     row.add_suffix(&scale);
@@ -1043,7 +1043,7 @@ fn boolean_switch_row(
     serial: Option<&str>,
 ) -> adw::SwitchRow {
     let row = adw::SwitchRow::builder()
-        .title(&ctrl.name)
+        .title(&crate::v4l2_labels::control_name(ctrl.id, &ctrl.name))
         .active(current)
         .build();
 
@@ -1085,7 +1085,7 @@ fn readonly_action_row(ctrl: &ControlDescriptor) -> adw::ActionRow {
     };
 
     adw::ActionRow::builder()
-        .title(&ctrl.name)
+        .title(&crate::v4l2_labels::control_name(ctrl.id, &ctrl.name))
         .subtitle(&subtitle)
         .build()
 }
@@ -1097,7 +1097,11 @@ fn menu_combo_row(
     path: &Path,
     serial: Option<&str>,
 ) -> adw::ComboRow {
-    let labels: Vec<&str> = options.iter().map(|(_, label)| label.as_str()).collect();
+    let labels: Vec<String> = options
+        .iter()
+        .map(|(_, label)| crate::v4l2_labels::menu_option(ctrl.id, label))
+        .collect();
+    let labels: Vec<&str> = labels.iter().map(String::as_str).collect();
     let model = gtk::StringList::new(&labels);
 
     let selected = options
@@ -1107,7 +1111,7 @@ fn menu_combo_row(
         .unwrap_or(0);
 
     let row = adw::ComboRow::builder()
-        .title(&ctrl.name)
+        .title(&crate::v4l2_labels::control_name(ctrl.id, &ctrl.name))
         .model(&model)
         .selected(selected)
         .build();

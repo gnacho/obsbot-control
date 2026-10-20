@@ -6,9 +6,9 @@ xdata = pkgtype=pkg
 pkgver = 0.5.0-1
 pkgdesc = Native GNOME app to control OBSBOT Tiny 2 family webcams over UVC/V4L2
 url = https://github.com/Domatix/obsbot-control
-builddate = 1792504943
+builddate = 1792506172
 packager = Unknown Packager
-size = 802085
+size = 806884
 arch = x86_64
 license = GPL-3.0-or-later
 depend = gtk4

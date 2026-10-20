@@ -674,8 +674,9 @@ fn build_preview_toggle(handles: &PreviewHandles) -> gtk::ToggleButton {
                         }
                         Err(err) => {
                             settings::surface_error(&format!(
-                                "{}: {err}",
-                                gettext("Could not initialize preview")
+                                "{}: {}",
+                                gettext("Could not initialize preview"),
+                                crate::i18n_errors::preview_error_text(&err)
                             ));
                             ok = false;
                         }
@@ -685,8 +686,9 @@ fn build_preview_toggle(handles: &PreviewHandles) -> gtk::ToggleButton {
                     if let Some(p) = slot.as_mut() {
                         if let Err(err) = p.start(&path) {
                             settings::surface_error(&format!(
-                                "{}: {err}",
-                                gettext("Could not start preview")
+                                "{}: {}",
+                                gettext("Could not start preview"),
+                                crate::i18n_errors::preview_error_text(&err)
                             ));
                             ok = false;
                         }
@@ -823,11 +825,11 @@ fn save_snapshot(picture: &gtk::Picture) -> Result<std::path::PathBuf, String> {
 
     let paintable = picture
         .paintable()
-        .ok_or_else(|| "preview pipeline has no paintable".to_string())?;
+        .ok_or_else(|| gettext("The preview has no drawable surface yet."))?;
     let width = paintable.intrinsic_width();
     let height = paintable.intrinsic_height();
     if width <= 0 || height <= 0 {
-        return Err(gettext("No frame available — start the preview first"));
+        return Err(gettext("No frame available - start the preview first"));
     }
     let snapshot = gtk::Snapshot::new();
     paintable.snapshot(
@@ -841,7 +843,7 @@ fn save_snapshot(picture: &gtk::Picture) -> Result<std::path::PathBuf, String> {
     let renderer = picture
         .native()
         .and_then(|n| n.renderer())
-        .ok_or_else(|| "no GskRenderer available on this surface".to_string())?;
+        .ok_or_else(|| gettext("The window is not ready to render the preview yet."))?;
     #[allow(clippy::cast_precision_loss)]
     let bounds = gtk::graphene::Rect::new(0.0, 0.0, width as f32, height as f32);
     let texture = renderer.render_texture(node, Some(&bounds));

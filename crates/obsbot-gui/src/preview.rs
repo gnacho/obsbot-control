@@ -164,7 +164,10 @@ pub fn send_sleep(path: &Path) {
                 eprintln!("preview: failed to put camera to sleep: {err}");
             }
         }
-        Err(err) => eprintln!("preview: open {path:?} to sleep camera failed: {err}"),
+        Err(err) => eprintln!(
+            "preview: open {} to sleep camera failed: {err}",
+            path.display()
+        ),
     }
 }
 

@@ -227,7 +227,7 @@ fn ai_mode_row(file: &Rc<File>, baseline: Option<&Status>) -> adw::ComboRow {
             return;
         };
         if let Err(err) = set_ai_mode(&file_for_cb, mode) {
-            report_xu_error("AI tracking mode", &err);
+            report_xu_error(&gettext("AI tracking mode"), &err);
         }
     });
     row
@@ -287,7 +287,7 @@ fn gestures_row(file: &Rc<File>) -> adw::ExpanderRow {
         let file_for_cb = Rc::clone(file);
         row.connect_active_notify(move |row| {
             if let Err(err) = set_gesture(&file_for_cb, gesture, row.is_active()) {
-                report_xu_error("Gesture", &err);
+                report_xu_error(&gettext("Gesture"), &err);
             }
         });
         expander.add_row(&row);
@@ -337,7 +337,7 @@ fn fov_row(file: &Rc<File>) -> adw::ComboRow {
             return;
         };
         if let Err(err) = set_fov(&file_for_cb, mode) {
-            report_xu_error("Field of view", &err);
+            report_xu_error(&gettext("Field of view"), &err);
         }
     });
     row
@@ -352,7 +352,7 @@ fn hdr_row(file: &Rc<File>, baseline: Option<&Status>) -> adw::SwitchRow {
     let file_for_cb = Rc::clone(file);
     row.connect_active_notify(move |row| {
         if let Err(err) = set_hdr(&file_for_cb, row.is_active()) {
-            report_xu_error("HDR", &err);
+            report_xu_error(&gettext("HDR"), &err);
         }
     });
     row
@@ -410,7 +410,7 @@ fn tracking_speed_row(file: &Rc<File>, baseline: Option<&Status>) -> adw::ComboR
             return;
         };
         if let Err(err) = set_tracking_speed(&file_for_cb, mode) {
-            report_xu_error("Tracking speed", &err);
+            report_xu_error(&gettext("Tracking speed"), &err);
         }
     });
     row
@@ -436,6 +436,6 @@ fn ai_mode_label(mode: AiMode) -> String {
 fn report_xu_error(control: &str, err: &XuError) {
     let msg = gettext("Failed to set {name}: {error}")
         .replace("{name}", control)
-        .replace("{error}", &err.to_string());
+        .replace("{error}", &crate::i18n_errors::xu_error_text(err));
     settings::surface_error(&msg);
 }

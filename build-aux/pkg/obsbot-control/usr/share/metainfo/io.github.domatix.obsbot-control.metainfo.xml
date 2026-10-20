@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright © 2026 Domatix and contributors -->
+<component type="desktop-application">
+  <id>io.github.domatix.obsbot-control</id>
+  <launchable type="desktop-id">io.github.domatix.obsbot-control.desktop</launchable>
+
+  <name>Obsbot Cam Control</name>
+  <summary>Control your OBSBOT webcam</summary>
+
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-3.0-or-later</project_license>
+
+  <description>
+    <p>
+      Obsbot Cam Control is a native GNOME application for configuring
+      OBSBOT Tiny 2 family webcams over USB. It relies only on free,
+      open-source code paths (V4L2 standard controls and UVC extension
+      units); the OBSBOT proprietary SDK is not used.
+    </p>
+    <p>Capabilities:</p>
+    <ul>
+      <li>AI auto-framing with ten tracking modes, plus tracking
+        speed control.</li>
+      <li>HDR, field of view (Wide / Normal / Narrow), and face
+        auto-exposure via vendor controls.</li>
+      <li>Live preview inside the app, with snapshot to PNG.</li>
+      <li>Pan, tilt, and zoom pad with single-step moves.</li>
+      <li>Brightness, contrast, saturation, hue, and sharpness.</li>
+      <li>White balance and exposure (auto and manual).</li>
+      <li>Recall of the three firmware preset positions.</li>
+      <li>Per-camera settings persistence.</li>
+    </ul>
+    <p>
+      Supported hardware: OBSBOT Tiny 2 (USB 3564:fef8) and Tiny 2 Lite
+      (USB 3564:fef9). Other OBSBOT cameras are best-effort.
+    </p>
+    <p>
+      This is an unofficial third-party application, not affiliated
+      with or endorsed by OBSBOT or Remo Tech Co., Ltd.
+    </p>
+  </description>
+
+  <screenshots>
+    <screenshot type="default">
+      <caption>Main controls with the live preview active</caption>
+      <image>https://raw.githubusercontent.com/Domatix/obsbot-control/main/data/screenshots/main-page-with-preview.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>Image adjustments: brightness, contrast, saturation and more</caption>
+      <image>https://raw.githubusercontent.com/Domatix/obsbot-control/main/data/screenshots/image-controls.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>Pan, tilt and zoom controls</caption>
+      <image>https://raw.githubusercontent.com/Domatix/obsbot-control/main/data/screenshots/ptz-zoom-controls.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>Recall of the camera's preset positions</caption>
+      <image>https://raw.githubusercontent.com/Domatix/obsbot-control/main/data/screenshots/presets.png</image>
+    </screenshot>
+  </screenshots>
+
+  <categories>
+    <category>AudioVideo</category>
+    <category>Video</category>
+  </categories>
+
+  <keywords>
+    <keyword>OBSBOT</keyword>
+    <keyword>Tiny</keyword>
+    <keyword>Tiny 2</keyword>
+    <keyword>Tiny 2 Lite</keyword>
+    <keyword>webcam</keyword>
+    <keyword>camera</keyword>
+    <keyword>PTZ</keyword>
+    <keyword>UVC</keyword>
+    <keyword>AI</keyword>
+    <keyword>tracking</keyword>
+    <keyword>auto-framing</keyword>
+    <keyword>HDR</keyword>
+  </keywords>
+
+  <url type="homepage">https://github.com/Domatix/obsbot-control</url>
+  <url type="bugtracker">https://github.com/Domatix/obsbot-control/issues</url>
+  <url type="vcs-browser">https://github.com/Domatix/obsbot-control</url>
+
+  <developer id="io.github.domatix">
+    <name>Domatix and contributors</name>
+  </developer>
+
+  <content_rating type="oars-1.1" />
+
+  <provides>
+    <binary>obsbot-control</binary>
+  </provides>
+
+  <supports>
+    <control>keyboard</control>
+    <control>pointing</control>
+    <control>touch</control>
+  </supports>
+
+  <releases>
+    <release version="0.5.0" date="2026-08-14" type="development">
+      <description>
+        <p>
+          First release packaged for Flathub, with an offline
+          reproducible Flatpak build and an AppStream listing with
+          screenshots:
+        </p>
+        <ul>
+          <li>Gesture control: one switch per on-device gesture, so
+            you can enable or disable hand tracking, silence and zoom
+            gestures from the app.</li>
+          <li>Zoom lock: a switch in the PTZ group pins the current
+            zoom and keeps it there even when the camera tries to
+            reframe on its own.</li>
+          <li>Settings persistence now works on installed builds: the
+            GSettings schema is looked up at runtime instead of
+            assuming the source tree layout.</li>
+          <li>The Flatpak is now built fully offline: every crate and
+            git dependency is pinned and hashed, so the package
+            builds reproducibly with no network access.</li>
+        </ul>
+      </description>
+    </release>
+    <release version="0.4.2" date="2026-06-18" type="development">
+      <description>
+        <p>
+          User-interface streamlining, bundling several rounds of
+          layout feedback:
+        </p>
+        <ul>
+          <li>The app now opens directly on the connected camera's
+            controls instead of an intermediate camera list; a header
+            dropdown appears only when more than one camera is present.</li>
+          <li>Tabs were reorganized: a new "Main" tab gathers AI
+            tracking, autofocus, and HDR, and "Presets" replaces the
+            old "Extras" tab.</li>
+          <li>Verbose group descriptions and redundant row subtitles
+            were trimmed for a cleaner, denser layout.</li>
+          <li>The preview-only grayscale and mirror toggles were hidden,
+            since they never affected what other apps capture.</li>
+        </ul>
+      </description>
+    </release>
+    <release version="0.4.1" date="2026-06-11" type="development">
+      <description>
+        <p>
+          Preview and camera power-handling fixes, after reports that
+          the camera stayed on when nobody was using it:
+        </p>
+        <ul>
+          <li>The camera is now released and powered down when you stop
+            the preview, navigate back, or close the app, instead of
+            staying awake (LED on) in the background.</li>
+          <li>The live preview now wakes the camera reliably when you
+            re-open it.</li>
+          <li>The grayscale filter now works, and the noisy GStreamer
+            warnings it printed on every frame are gone.</li>
+        </ul>
+      </description>
+    </release>
+    <release version="0.4.0" date="2026-06-02" type="development">
+      <description>
+        <p>
+          The Live Preview milestone — and the first build
+          distributable as a Flatpak. Validated against the
+          Tiny 2 Lite:
+        </p>
+        <ul>
+          <li>Flatpak packaging: the manifest now builds and
+            bundles the gtk4paintablesink GStreamer plugin (and
+            blueprint-compiler) the GNOME runtime does not ship,
+            so the in-app live preview works from a Flatpak
+            install, not just the native build.</li>
+          <li>Simpler, reliable PTZ: each directional button
+            click and each arrow-key press performs exactly one
+            5° move. The previous press-and-hold / continuous
+            mode was removed after it proved unreliable.</li>
+          <li>Carries the full v0.4 first slice: in-app live
+            preview, snapshot to PNG, and a grayscale filter.</li>
+        </ul>
+        <p>
+          This development build targets the GNOME 48 runtime; a
+          Flathub submission will move to a current runtime.
+        </p>
+      </description>
+    </release>
+    <release version="0.3.2" date="2026-06-02" type="development">
+      <description>
+        <p>
+          Point release completing the first slice of v0.4 work on
+          the native build, validated against the Tiny 2 Lite:
+        </p>
+        <ul>
+          <li>Snapshot to file (T-201): a header-bar camera button
+            saves the current preview frame as a PNG under your
+            Pictures folder.</li>
+          <li>Grayscale preview filter (T-202): a header-bar toggle
+            switches the live feed between colour and black-and-white
+            instantly.</li>
+          <li>PTZ speed control (T-101c): a tunable hold speed
+            (ptz-speed-fast GSettings key), a Shift+Arrow accelerator
+            for fast keyboard pans, and clean cancellation of an
+            in-progress hold when the camera is unplugged.</li>
+          <li>Smoother PTZ hold: press-and-hold now drives the camera
+            from a local position accumulator instead of re-reading
+            the device every tick, fixing a visible stall during fast
+            pans.</li>
+          <li>Smaller preview pane (T-204): the embedded feed is 20%
+            shorter so it sits as a banner above the controls rather
+            than dominating the window.</li>
+        </ul>
+        <p>
+          The Flatpak distribution still tracks v0.3.0 until the
+          gstreamer1.0-gtk4 plugin module is validated end-to-end in
+          the manifest; the .deb / native builds carry these changes.
+        </p>
+      </description>
+    </release>
+    <release version="0.3.1" date="2026-05-19" type="development">
+      <description>
+        <p>
+          Point release on top of v0.3.0 bundling three earlier
+          follow-ups that were ready to ship on the native build:
+        </p>
+        <ul>
+          <li>Live preview pipeline (T-200): a feature-gated
+            v4l2src ! videoconvert ! gtk4paintablesink chain
+            renders the camera feed inside a sticky revealer
+            above the controls page. A header-bar toggle starts
+            and stops the pipeline; an Adwaita banner with a
+            "Show preview" action surfaces the feature for new
+            users. Device-busy errors (another app holding
+            /dev/videoN) show as a toast and the toggle snaps
+            back to off. Requires the gstreamer1.0-gtk4 plugin
+            on the host; opt in at build time with
+            --features live-preview.</li>
+          <li>PTZ press-and-hold + keyboard arrows (T-101b):
+            holding any of the 8 directional buttons engages a
+            smooth motion mode (about 20 degrees per second);
+            arrow keys + Home drive the same logic from the
+            keyboard while focused sliders keep consuming their
+            own arrows. Diagonals work via either the corner
+            buttons or two arrows pressed simultaneously.</li>
+          <li>Settings persistence fix (T-105fix): the GSettings
+            schema and the runtime read/write path are now
+            aligned, so per-camera control values actually
+            survive a restart. Pre-existing schema/key mismatch
+            from v0.1 silently swallowed every write.</li>
+        </ul>
+        <p>
+          The Flatpak distribution stays on v0.3.0 until the
+          gstreamer1.0-gtk4 plugin module lands in the manifest
+          — the GNOME Platform 48 runtime does not ship it. The
+          .deb / native builds work as-is.
+        </p>
+      </description>
+    </release>
+    <release version="0.3.0" date="2026-05-14" type="development">
+      <description>
+        <p>
+          Release 0.3 lands the OBSBOT vendor controls. The
+          application now exposes the Tiny 2 family's UVC
+          Extension Unit surface through two new groups on the
+          per-camera page, all reverse-engineered from existing
+          free-software work (see CREDITS.md):
+        </p>
+        <ul>
+          <li>AI tracking with ten framing modes: No tracking,
+            Normal, Upper body, Close-up, Headless, Lower body,
+            Group, Desk mode, Whiteboard, and Hand.</li>
+          <li>Field of view: Wide (86°), Normal (78°),
+            Narrow (65°).</li>
+          <li>HDR on/off.</li>
+          <li>Face Auto-Exposure metering (Global / Face) and
+            global Exposure mode (Auto / Manual).</li>
+          <li>Tracking speed (Standard / Sport).</li>
+          <li>Camera power state (Sleep / Wake).</li>
+          <li>Preset position recall for three slots (program
+            slots via the OBSBOT Center app or on-device gestures
+            before recalling).</li>
+          <li>"Show XU status (hex dump)" diagnostic dialog —
+            renders the full 60-byte status payload as a hex
+            grid with the five known fields decoded inline, and a
+            "Copy hex" button for community discovery of the
+            55 still-undecoded bytes.</li>
+        </ul>
+        <p>
+          All XU bytes ported under EUPL-1.2 → GPL-3 compatibility
+          from cgevans/tiny2 and OpenFoxes/Tiny4Linux; OBSBOT's
+          proprietary SDK remains unused. Live preview is the next
+          milestone.
+        </p>
+      </description>
+    </release>
+    <release version="0.2.0" date="2026-05-14" type="development">
+      <description>
+        <p>
+          Release 0.2 lands the V4L2 standard-controls milestone.
+          The application now detects connected OBSBOT Tiny 2 family
+          cameras and exposes a working subset of standard UVC
+          controls inside polished libadwaita widgets:
+        </p>
+        <ul>
+          <li>Pan / tilt / zoom pad with 8 directional buttons, a
+            center reset, and a vertical zoom slider.</li>
+          <li>Brightness, contrast, saturation, hue, sharpness,
+            gain, backlight compensation, white-balance temperature
+            sliders with reset-to-default.</li>
+          <li>Dedicated White balance group (Auto / Temperature /
+            Red / Blue) and Exposure group (Auto Mode /
+            Time Absolute), with automatic INACTIVE grey-out when
+            an auto toggle freezes its dependents.</li>
+          <li>Anti-flicker selector (Disabled / 50 Hz / 60 Hz).</li>
+          <li>Per-camera settings persistence: control values
+            survive app restart, keyed by the camera serial.</li>
+          <li>Hamburger menu with About dialog (version, license,
+            issue tracker, credits).</li>
+          <li>Internal: in-app toast notifications on V4L2 write
+            failures, full gettext scaffolding so Spanish (and
+            other) translations can land in v0.6.</li>
+        </ul>
+        <p>
+          Vendor-specific features (HDR, FOV, auto-framing) remain
+          on the v0.4 roadmap.
+        </p>
+      </description>
+    </release>
+    <release version="0.1.0" date="2026-05-13" type="development">
+      <description>
+        <p>
+          Initial development release. Scaffolding only: the
+          application window opens but does not yet detect or control
+          cameras. See the project roadmap for the planned milestones.
+        </p>
+      </description>
+    </release>
+  </releases>
+</component>

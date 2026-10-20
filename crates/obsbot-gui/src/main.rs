@@ -28,6 +28,7 @@ mod controls_view;
 mod exposure_group;
 mod extras_view;
 mod i18n;
+mod i18n_errors;
 #[cfg(feature = "live-preview")]
 mod preview;
 mod ptz_pad;

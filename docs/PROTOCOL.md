@@ -245,6 +245,24 @@ expose one or the other; OBSBOT exposes both, gated by the same
 
 ### 2.3 Observed quirks
 
+#### Measured sign conventions (Tiny 2 Lite)
+
+Measured on hardware with phase correlation between captured frames,
+because the kernel documentation is not enough here:
+
+- `pan_absolute` positive moves the picture **left** (the camera body
+  turns right), as the UVC spec implies, 64 px for 5 degrees.
+- `tilt_absolute` positive moves the picture **up** (the body tilts
+  down), the opposite of what the kernel docs suggest, 40 px for
+  3 degrees.
+
+The GUI therefore writes a smaller pan for "right" and a larger tilt
+for "up", so the arrows move the picture in the direction pressed.
+Note that the preview is not mirrored (the T-210 filter sits at
+`method=none` and its toggle is hidden since T-221); with a mirror the
+horizontal signs would have to flip.
+
+
 - **Q1 — `power_line_frequency` default outside menu range.** Kernel
   reports `default=3` for a menu that only declares values
   `{0, 1, 2}`. `v4l2-ctl --get-ctrl power_line_frequency` returns
